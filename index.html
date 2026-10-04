@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Gramoday|Dashboard</title>
+
+  <!-- Bootstrap 5 & Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Noto Sans Devanagari -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #0d5c3a;
+      --primary-dark: #073822;
+      --primary-light: #15803d;
+      --accent: #f59e0b;
+      --accent-hover: #d97706;
+      --navy: #0f172a;
+      --surface: #ffffff;
+      --bg-cream: #f8fafc;
+      --border-color: #e2e8f0;
+      --text-muted: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: #1e293b;
+      margin: 0;
+      padding-bottom: 74px; /* Space for mobile navigation */
+      overflow-x: hidden;
+    }
+
+    @media (min-width: 992px) {
+      body {
+        padding-bottom: 20px;
+      }
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    /* Top Navigation */
+    .top-navbar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 1020;
+    }
+
+    .brand-logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      padding: 2px;
+      border: 1.5px solid #a7f3d0;
+      background: #ffffff;
+      object-fit: contain;
+    }
+
+    .brand-title-wrap h6 {
+      color: var(--primary-dark);
+      font-weight: 800;
+      font-size: 1.05rem;
+      line-height: 1.1;
+      margin: 0;
+      letter-spacing: -0.3px;
+    }
+
+    .brand-title-wrap small {
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* Language and Profile Pills */
+    .btn-lang-toggle {
+      border: 1.5px solid var(--primary);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 30px;
+      background: transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .btn-lang-toggle:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .user-pill {
+      background: #ecfdf5;
+      color: var(--primary-dark);
+      border: 1px solid #a7f3d0;
+      padding: 0.32rem 0.75rem;
+      border-radius: 30px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Hero Banner Card */
+    .dashboard-hero {
+      background: linear-gradient(135deg, #0d5c3a 0%, #15803d 50%, #0f172a 100%);
+      color: #ffffff;
+      border-radius: 18px;
+      padding: 1.5rem 1.25rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 25px -5px rgba(13, 92, 58, 0.25);
+    }
+
+    .dashboard-hero::after {
+      content: "";
+      position: absolute;
+      right: -30px;
+      bottom: -30px;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: rgba(245, 158, 11, 0.15);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Metric Stat Cards */
+    .stat-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1rem;
+      transition: all 0.2s ease;
+      height: 100%;
+    }
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+      border-color: #cbd5e1;
+    }
+
+    .stat-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+    }
+
+    /* Scheme Cards */
+    .scheme-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .scheme-card:hover {
+      box-shadow: 0 10px 25px rgba(13, 92, 58, 0.08);
+      border-color: #a7f3d0;
+    }
+
+    .scheme-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.25rem 0.55rem;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    .tag-gov { background: #dcfce7; color: #166534; }
+    .tag-farmer { background: #fef3c7; color: #92400e; }
+    .tag-girls { background: #fce7f3; color: #9d174d; }
+    .tag-open { background: #e0f2fe; color: #075985; }
+
+    .tts-speaker-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tts-speaker-btn:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* Flowchart / Tree for Career Roadmaps */
+    .flow-node {
+      background: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: 12px;
+      padding: 0.85rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .flow-node.active, .flow-node:hover {
+      border-color: var(--primary);
+      background: #f0fdf4;
+      box-shadow: 0 4px 12px rgba(13, 92, 58, 0.1);
+    }
+
+    /* Document Readiness Checklist */
+    .doc-item {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.6rem;
+      transition: all 0.2s ease;
+    }
+    .doc-item.checked {
+      background: #f0fdf4;
+      border-color: #86efac;
+    }
+
+    /* Mobile Bottom Dock */
+    .bottom-dock {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      z-index: 1040;
+      box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.04);
+    }
+
+    .dock-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-decoration: none;
+      background: none;
+      border: none;
+      padding: 4px 10px;
+      width: 25%;
+      transition: color 0.15s ease;
+    }
+    .dock-tab i {
+      font-size: 1.25rem;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+    .dock-tab.active {
+      color: var(--primary);
+    }
+
+    /* Quick Filter Chips */
+    .filter-chip {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      color: #334155;
+      padding: 0.35rem 0.85rem;
+      border-radius: 30px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-chip.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .filter-scroll-wrapper {
+      overflow-x: auto;
+      white-space: nowrap;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .filter-scroll-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top-navbar px-3 py-2">
+    <div class="container-fluid d-flex align-items-center justify-content-between max-container">
+      
+      <!-- Brand & Initiative -->
+      <div class="d-flex align-items-center gap-2">
+        <img src="Gramodaylogo.jpg" alt="Gramoday Logo" class="brand-logo-img">
+          <circle cx="50" cy="50" r="48" fill="#ffffff" stroke="#0d5c3a" stroke-width="3"/>
+          <path d="M50 20 A 18 18 0 0 1 50 46 A 18 18 0 0 1 50 20" fill="#f59e0b"/>
+          <path d="M50 20 L50 12 M35 24 L29 18 M65 24 L71 18 M24 35 L16 33 M76 35 L84 33" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M18 52 Q 50 42 50 62 Q 50 42 82 52 Q 80 62 50 72 Q 20 62 18 52 Z" fill="#f59e0b"/>
+          <path d="M16 64 Q 50 54 50 78 Q 50 54 84 64 Q 82 76 50 88 Q 18 76 16 64 Z" fill="#0d5c3a"/>
+        </svg>
+        <div class="brand-title-wrap">
+          <h6>GRAMODAY</h6>
+        </div>
+      </div>
+
+      <!-- Quick Controls: Guest Profile & Language Toggle -->
+      <div class="d-flex align-items-center gap-2">
+        
+        <!-- Quick Profile Persona Switcher (Zero login wall) -->
+        <div class="dropdown">
+          <button class="user-pill dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-circle text-success"></i>
+            <span id="currentProfileName">Student (12th OBC)</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3 p-2 font-monospace small" style="min-width: 250px;">
+            <li class="dropdown-header text-uppercase fw-bold text-muted py-1" style="font-size: 0.65rem;" data-i18n="switchPersona">Switch Quick Profile (No Password)</li>
+            <li><button class="dropdown-item rounded-2 py-1 mb-1" onclick="applyPersona('student_obc')">🎓 12th Science (OBC Category)</button></li>
+            <li><button class="dropdown-item rounded-2 py-1 mb-1" onclick="applyPersona('farmer_ward')">🚜 Farmer Ward (शेतकरी पाल्य)</button></li>
+            <li><button class="dropdown-item rounded-2 py-1 mb-1" onclick="applyPersona('girl_higher')">👩 Girl Student (Higher Ed 100% Free)</button></li>
+            <li><button class="dropdown-item rounded-2 py-1 mb-1" onclick="applyPersona('ebc_engg')">🏛️ General / EBC (Engineering / Degree)</button></li>
+            <li><button class="dropdown-item rounded-2 py-1 text-danger" onclick="applyPersona('guest_all')">🔄 Show All Schemes (Guest View)</button></li>
+          </ul>
+        </div>
+
+        <!-- Marathi / English Toggle -->
+        <button class="btn-lang-toggle" onclick="toggleDashboardLang()" id="btnLang">
+          <i class="bi bi-translate"></i>
+          <span id="langText">मराठी</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="container my-3 px-3">
+    
+    <!-- Hero Banner: Zero Friction Invitation -->
+    <div class="dashboard-hero mb-3">
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+        <span class="hero-badge">
+          <i class="bi bi-shield-check text-warning"></i>
+          <span data-i18n="heroBadgeDirect">Open Access Dashboard • No Login Required</span>
+        </span>
+        <span class="text-white-50 small" id="currentDateBadge"><i class="bi bi-calendar-event me-1"></i>Academic Year 2025-2026</span>
+      </div>
+
+      <h2 class="h4 fw-bold mt-2 mb-1" data-i18n="heroGreeting">
+        Namaste, Welcome to Gramoday!
+      </h2>
+      <p class="small text-white-50 mb-3" style="max-width: 580px;" data-i18n="heroTagline">
+        Find scholarships, calculate document eligibility, and choose the right post-10th/12th career path without middlemen or confusion.
+      </p>
+
+      <div class="d-flex flex-wrap gap-2">
+        <button class="btn btn-warning btn-sm fw-bold px-3 py-2 rounded-3 text-dark d-inline-flex align-items-center gap-1 shadow-sm" onclick="scrollToSection('schemesSection')">
+          <i class="bi bi-funnel-fill"></i>
+          <span data-i18n="btnExploreSchemes">Explore Schemes (१००+ योजना)</span>
+        </button>
+        <button class="btn btn-outline-light btn-sm fw-semibold px-3 py-2 rounded-3 d-inline-flex align-items-center gap-1" onclick="scrollToSection('roadmapSection')">
+          <i class="bi bi-diagram-3-fill"></i>
+          <span data-i18n="btnCareerMap">Career Tree (१०वी-१२वी नंतर काय?)</span>
+        </button>
+        <button class="btn btn-light btn-sm fw-semibold px-3 py-2 rounded-3 text-dark d-inline-flex align-items-center gap-1" onclick="scrollToSection('walletSection')">
+          <i class="bi bi-folder-check text-success"></i>
+          <span data-i18n="btnDocWallet">Doc Readiness (कागदपत्रे तपासणी)</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="row g-2 mb-3">
+      
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="small fw-semibold text-muted" data-i18n="statIndexed">Schemes Indexed</span>
+            <div class="stat-icon" style="background: #dcfce7; color: #166534;"><i class="bi bi-collection"></i></div>
+          </div>
+          <h3 class="fw-bold fs-4 mb-0 mt-2 text-dark">114</h3>
+          <small class="text-success fw-semibold" style="font-size: 0.68rem;" data-i18n="statIndexedSub">Maharashtra & Central</small>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="small fw-semibold text-muted" data-i18n="statMatch">Your Matches</span>
+            <div class="stat-icon" style="background: #fef3c7; color: #b45309;"><i class="bi bi-patch-check-fill"></i></div>
+          </div>
+          <h3 class="fw-bold fs-4 mb-0 mt-2 text-dark" id="matchCounter">6</h3>
+          <small class="text-warning fw-bold" style="font-size: 0.68rem;" data-i18n="statMatchSub">Instant Qualified</small>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="small fw-semibold text-muted" data-i18n="statFund">Direct Aid Pool</span>
+            <div class="stat-icon" style="background: #e0f2fe; color: #0369a1;"><i class="bi bi-currency-rupee"></i></div>
+          </div>
+          <h3 class="fw-bold fs-4 mb-0 mt-2 text-dark">100%</h3>
+          <small class="text-info fw-bold" style="font-size: 0.68rem;" data-i18n="statFundSub">Fee Waivers / DBT</small>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="small fw-semibold text-muted" data-i18n="statUrgent">Urgent Deadlines</span>
+            <div class="stat-icon" style="background: #fee2e2; color: #991b1b;"><i class="bi bi-alarm"></i></div>
+          </div>
+          <h3 class="fw-bold fs-4 mb-0 mt-2 text-danger">3</h3>
+          <small class="text-danger fw-semibold" style="font-size: 0.68rem;" data-i18n="statUrgentSub">Closing Soon</small>
+        </div>
+      </div>
+
+    </div>
+
+    <section id="schemesSection" class="mb-4">
+      
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+        <div>
+          <h5 class="fw-bold mb-0 text-dark" data-i18n="schemesHeading">Verified Government & Trust Schemes</h5>
+          <small class="text-muted" data-i18n="schemesSub">Filtered according to your selected criteria. Instant eligibility without paperwork delays.</small>
+        </div>
+
+        <div class="d-flex align-items-center gap-1">
+          <button class="btn btn-outline-secondary btn-sm rounded-3 py-1 px-2" onclick="resetFilter()" title="Reset All Filters">
+            <i class="bi bi-arrow-counterclockwise"></i> <span data-i18n="btnReset">Reset</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Filter Chips Horizontal Scroll on Mobile -->
+      <div class="filter-scroll-wrapper d-flex gap-2 py-2 mb-2">
+        <button class="filter-chip active" onclick="setQuickCategory('ALL', this)" data-i18n="filterAll">All Schemes (सर्व)</button>
+        <button class="filter-chip" onclick="setQuickCategory('STUDENT', this)" data-i18n="filterStudent">🎓 10th & 12th Students</button>
+        <button class="filter-chip" onclick="setQuickCategory('GIRLS', this)" data-i18n="filterGirls">🌸 Girls Higher Education (100% Free)</button>
+        <button class="filter-chip" onclick="setQuickCategory('FARMER', this)" data-i18n="filterFarmer">🌾 Farmer Family Wards</button>
+        <button class="filter-chip" onclick="setQuickCategory('EBC', this)" data-i18n="filterEbc">📄 EBC / Open Merit</button>
+        <button class="filter-chip" onclick="setQuickCategory('CASTE', this)" data-i18n="filterCaste">⚖️ SC / ST / OBC / VJNT</button>
+      </div>
+
+      <!-- Live Search & Education Level Filter Dropdowns -->
+      <div class="card border-0 shadow-sm rounded-3 p-2 mb-3 bg-white">
+        <div class="row g-2">
+          <div class="col-12 col-md-5">
+            <div class="input-group input-group-sm">
+              <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
+              <input type="text" id="schemeSearchInput" class="form-control border-start-0" placeholder="Search scholarship name, keywords..." oninput="handleSearch()">
+            </div>
+          </div>
+          <div class="col-6 col-md-4">
+            <select class="form-select form-select-sm" id="eduFilterSelect" onchange="renderSchemes()">
+              <option value="ALL" data-i18n="optAllEdu">All Education Stages</option>
+              <option value="10TH">10th Passed / SSC</option>
+              <option value="12TH">12th Standard (Sci/Com/Arts)</option>
+              <option value="DIPLOMA">Polytechnic / ITI</option>
+              <option value="DEGREE">Degree / Engineering / Medical</option>
+            </select>
+          </div>
+          <div class="col-6 col-md-3">
+            <select class="form-select form-select-sm" id="incomeFilterSelect" onchange="renderSchemes()">
+              <option value="ALL" data-i18n="optAllIncome">All Income Brackets</option>
+              <option value="2.5L">Under ₹2.5 Lakh/yr</option>
+              <option value="8.0L">Under ₹8.0 Lakh/yr</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Scheme Cards Container -->
+      <div id="schemesCardsList">
+        <!-- Rendered by JavaScript dynamically -->
+      </div>
+
+    </section>
+
+    <section id="roadmapSection" class="mb-4 pt-2">
+      <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+          <div>
+            <h5 class="fw-bold mb-0 text-dark" data-i18n="roadmapTitle">Career Pathways Tree (१०वी-१२वी नंतर काय?)</h5>
+            <small class="text-muted" data-i18n="roadmapSub">Click any path to view qualifications, entrance tests, and subsidized college options for village students.</small>
+          </div>
+          <div class="btn-group btn-group-sm" role="group">
+            <button type="button" class="btn btn-outline-success active" id="btnTree10" onclick="switchTreeStage('10TH')">After 10th (१०वीनंतर)</button>
+            <button type="button" class="btn btn-outline-success" id="btnTree12" onclick="switchTreeStage('12TH')">After 12th (१२वीनंतर)</button>
+          </div>
+        </div>
+
+        <!-- Interactive Flow Nodes -->
+        <div class="row g-2 my-2" id="treeNodesContainer">
+          <!-- Populated dynamically based on 10th or 12th -->
+        </div>
+
+        <!-- Pathway Details Popover / Box -->
+        <div class="p-3 rounded-3 bg-light border mt-2" id="pathwayDetailBox">
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge bg-success" id="detailBadge">Recommended</span>
+            <h6 class="fw-bold mb-0" id="detailTitle">Select a branch above to view path guide</h6>
+          </div>
+          <p class="small text-muted mb-2" id="detailDescription">Click any path card above to view detailed guidance, job scope in villages/cities, and scholarship backing.</p>
+          <div class="d-flex flex-wrap gap-2" id="detailTags">
+            <span class="badge bg-white text-dark border">Duration: 2-3 Years</span>
+            <span class="badge bg-white text-dark border">Govt Exam Eligible</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="walletSection" class="mb-4 pt-2">
+      <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+          <div>
+            <h5 class="fw-bold mb-0 text-dark" data-i18n="walletTitle">Dastavej (Document) Readiness Checklist</h5>
+            <small class="text-muted" data-i18n="walletSub">Tick off the certificates you have ready. Never miss a deadline due to missing documents!</small>
+          </div>
+          <div class="text-end">
+            <span class="badge bg-primary px-3 py-2 fs-6 rounded-pill" id="docReadinessPercentage">50% Ready</span>
+          </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress mb-3" style="height: 10px;">
+          <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%;" id="docProgressBar"></div>
+        </div>
+
+        <!-- Document Items List -->
+        <div class="row g-2" id="docChecklistContainer">
+          <!-- Populated by JavaScript -->
+        </div>
+
+        <div class="mt-3 p-2 rounded-3 bg-warning-subtle border border-warning text-dark small d-flex align-items-center gap-2">
+          <i class="bi bi-info-circle-fill text-warning fs-5 flex-shrink-0"></i>
+          <span data-i18n="docNotice">Village Gram Panchayat (Tahasildar Office / Aaple Sarkar Kendra) provides Domicile and Income certificates within 7 to 15 days.</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="p-3 rounded-4 bg-white border border-light-subtle shadow-sm mb-3 text-center">
+      <h6 class="fw-bold text-dark mb-1" data-i18n="mottoTitle">“Think Local • Innovate Indian • Impact Society”</h6>
+      <p class="small text-muted mb-0" data-i18n="mottoDesc">
+        Make in India Social Innovation Challenge 2026. Empowering first-generation rural families with digital equality and transparent scholarship access.
+      </p>
+    </div>
+
+  </main>
+
+  <nav class="bottom-dock d-lg-none">
+    <button class="dock-tab active" onclick="scrollToSection('schemesSection', this)">
+      <i class="bi bi-mortarboard"></i>
+      <span data-i18n="dockSchemes">Schemes</span>
+    </button>
+    <button class="dock-tab" onclick="scrollToSection('roadmapSection', this)">
+      <i class="bi bi-diagram-3"></i>
+      <span data-i18n="dockRoadmap">Career</span>
+    </button>
+    <button class="dock-tab" onclick="scrollToSection('walletSection', this)">
+      <i class="bi bi-wallet2"></i>
+      <span data-i18n="dockWallet">Docs</span>
+    </button>
+    <button class="dock-tab" onclick="openApplyGuidanceModal()">
+      <i class="bi bi-question-circle"></i>
+      <span data-i18n="dockHelp">Help</span>
+    </button>
+  </nav>
+
+  <div class="modal fade" id="schemeDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0 shadow-lg rounded-4">
+        
+        <div class="modal-header border-bottom py-3 px-3">
+          <div class="d-flex align-items-center gap-2">
+            <div class="p-2 rounded-3 bg-success-subtle text-success">
+              <i class="bi bi-award-fill fs-5"></i>
+            </div>
+            <div>
+              <h6 class="modal-title fw-bold mb-0 text-dark" id="modalSchemeName">Scheme Title</h6>
+              <small class="text-muted" id="modalSchemeOrg">Maharashtra Government / Central Portal</small>
+            </div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body p-3">
+          
+          <div class="row g-3">
+            <div class="col-md-7">
+              <h6 class="fw-bold text-dark small mb-1" data-i18n="mBenefit">Financial Assistance / Benefits:</h6>
+              <p class="small text-muted mb-3" id="modalBenefitDesc">100% Tuition Fee Waiver or Direct Benefit Transfer into bank account.</p>
+
+              <h6 class="fw-bold text-dark small mb-1" data-i18n="mEligibility">Who is eligible?</h6>
+              <ul class="small text-muted ps-3 mb-3" id="modalEligibilityList">
+                <li>Domicile of Maharashtra State.</li>
+                <li>Family income less than required limit.</li>
+              </ul>
+
+              <h6 class="fw-bold text-dark small mb-1" data-i18n="mDocs">Mandatory Documents Required:</h6>
+              <div class="d-flex flex-wrap gap-1 mb-2" id="modalDocBadges">
+                <span class="badge bg-light text-dark border">Income Certificate</span>
+                <span class="badge bg-light text-dark border">Caste Certificate</span>
+                <span class="badge bg-light text-dark border">Aadhaar Card</span>
+              </div>
+            </div>
+
+            <div class="col-md-5 border-start-md">
+              <div class="p-3 bg-light rounded-3 mb-3">
+                <small class="text-muted d-block" data-i18n="mDeadline">Application Deadline:</small>
+                <strong class="text-danger fs-6" id="modalDeadline">31 October 2026</strong>
+                <hr class="my-2">
+                <small class="text-muted d-block" data-i18n="mPortal">Official Portal:</small>
+                <strong class="text-dark small d-block" id="modalPortalName">MahaDBT Scholarship Portal</strong>
+              </div>
+
+              <div class="d-grid gap-2">
+                <a href="#" id="modalDirectLink" target="_blank" class="btn btn-success fw-bold py-2 rounded-3 text-center">
+                  <i class="bi bi-box-arrow-up-right me-1"></i>
+                  <span data-i18n="btnApplyGov">Open Official Portal to Apply</span>
+                </a>
+                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="speakCurrentModal()">
+                  <i class="bi bi-volume-up-fill me-1"></i>
+                  <span data-i18n="btnVoiceListen">Listen Audio Guide (आवाज ऐका)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="guidanceModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg rounded-4 p-2">
+        <div class="modal-header border-0 pb-0">
+          <h6 class="modal-title fw-bold" data-i18n="guideTitle">Help & Offline Assistance for Villages</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body pt-2 small text-muted">
+          <p data-i18n="guideP1">
+            Need help applying? In most villages, you can visit the nearest <strong>Aaple Sarkar Seva Kendra</strong> or <strong>CSC (Common Service Center)</strong> with the documents marked in the checklist.
+          </p>
+          <ul class="ps-3 mb-2">
+            <li>Ensure bank account is Aadhaar linked (NPCI mapped).</li>
+            <li>Take photo copy and scan copy on a simple mobile phone.</li>
+            <li>No agent fee is required for government scholarship submissions.</li>
+          </ul>
+          <div class="p-2 rounded bg-light border text-dark fw-bold text-center">
+            Toll-free MahaDBT Helpline: 022-49150800
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    /* ==========================================================================
+       1. DATA STRUCTURES & LOCALIZATION STRINGS
+       ========================================================================== */
+    const SCHEMES_DATABASE = [
+      {
+        id: "sch_1",
+        title_en: "Rajarshi Chhatrapati Shahu Maharaj Shikshan Shulkh Shishyavrutti",
+        title_mr: "राजर्षी छत्रपती शाहू महाराज शिक्षण शुल्क शिष्यवृत्ती",
+        org: "Govt of Maharashtra (DHE/DTE)",
+        tag: "EBC",
+        tagClass: "tag-open",
+        edu: ["12TH", "DIPLOMA", "DEGREE"],
+        incomeLimit: "8.0L",
+        category: ["OPEN", "EBC", "OBC"],
+        benefit_en: "50% Tuition Fee & Exam Fee Waiver for Professional/Higher Courses.",
+        benefit_mr: "उच्च व व्यावसायिक शिक्षणासाठी ५०% ट्यूशन फी व परीक्षा शुल्क माफी.",
+        eligibility_en: "Open/EBC students admitted through CAP round with annual family income up to ₹8 Lakh.",
+        eligibility_mr: "कॅप (CAP) फेरीद्वारे प्रवेश घेतलेले व ८ लाखांपर्यंत वार्षिक उत्पन्न असलेले खुल्या/ईबीसी प्रवर्गातील विद्यार्थी.",
+        docs: ["Income Certificate (Tahsildar)", "Domicile Certificate", "10th/12th Marksheet", "CAP Allotment Letter", "Aadhaar Card"],
+        deadline: "30 Nov 2026",
+        portal: "https://mahadbt.maharashtra.gov.in/",
+        portalName: "MahaDBT Portal"
+      },
+      {
+        id: "sch_2",
+        title_en: "100% Free Higher & Professional Education for Girls Scheme",
+        title_mr: "मुलींसाठी १००% मोफत उच्च व व्यावसायिक शिक्षण योजना",
+        org: "Government of Maharashtra (2024-2026)",
+        tag: "GIRLS",
+        tagClass: "tag-girls",
+        edu: ["12TH", "DIPLOMA", "DEGREE"],
+        incomeLimit: "8.0L",
+        category: ["OPEN", "OBC", "EBC", "SC", "ST"],
+        benefit_en: "100% Full Tuition Fee & Exam Fee reimbursed directly to colleges for girls.",
+        benefit_mr: "मुलींसाठी अभियांत्रिकी, फार्मसी, वैद्यकीय आणि पदवीच्या शिक्षणासाठी १००% मोफत फी माफी.",
+        eligibility_en: "Girl students with Maharashtra domicile and family annual income up to ₹8,00,000.",
+        eligibility_mr: "महाराष्ट्रातील रहिवासी असलेल्या आणि ८ लाखांपेक्षा कमी वार्षिक उत्पन्न असलेल्या सर्व पात्र विद्यार्थिनी.",
+        docs: ["Income Certificate", "Maharashtra Domicile", "Ration Card (Showing Girl Child)", "College Admission Receipt"],
+        deadline: "31 Oct 2026",
+        portal: "https://mahadbt.maharashtra.gov.in/",
+        portalName: "MahaDBT Girls Higher Education"
+      },
+      {
+        id: "sch_3",
+        title_en: "Dr. Punjabrao Deshmukh Vasatigruh Nirvah Bhatta (Hostel Allowance)",
+        title_mr: "डॉ. पंजाबराव देशमुख वसतिगृह निर्वाह भत्ता (शेतकरी पाल्य)",
+        org: "Directorate of Technical Education (DTE)",
+        tag: "FARMER",
+        tagClass: "tag-farmer",
+        edu: ["DIPLOMA", "DEGREE"],
+        incomeLimit: "8.0L",
+        category: ["OPEN", "EBC", "FARMER"],
+        benefit_en: "₹30,000/yr (Mumbai/Pune) and ₹20,000/yr in other districts for hostel allowance.",
+        benefit_mr: "वसतिगृहात राहणाऱ्या शेतकरी/अल्पभूधारक पाल्यांना वर्षाला ₹२०,००० ते ₹३०,००० निर्वाह भत्ता.",
+        eligibility_en: "Children of registered farmers (Alpabhudharak) or registered construction laborers.",
+        eligibility_mr: "अल्पभूधारक शेतकरी (७/१२ उतारा धारक) किंवा नोंदणीकृत बांधकाम मजुरांची मुले/मुली.",
+        docs: ["Parent 7/12 Extract (७/१२ उतारा)", "Alpabhudharak Certificate", "Hostel Certificate", "Aadhaar Linked Bank"],
+        deadline: "15 Nov 2026",
+        portal: "https://mahadbt.maharashtra.gov.in/",
+        portalName: "MahaDBT Farm Allowance"
+      },
+      {
+        id: "sch_4",
+        title_en: "Post-Matric Scholarship for OBC / VJNT / SBC Students",
+        title_mr: "इतर मागास वर्ग (OBC / VJNT / SBC) मॅट्रिकोत्तर शिष्यवृत्ती",
+        org: "OBC Bahujan Kalyan Department",
+        tag: "CASTE",
+        tagClass: "tag-gov",
+        edu: ["10TH", "12TH", "DIPLOMA", "DEGREE"],
+        incomeLimit: "2.5L",
+        category: ["OBC", "VJNT", "SBC"],
+        benefit_en: "100% Tuition fee + Exam fee + Monthly maintenance allowance directly in student account.",
+        benefit_mr: "१००% शिक्षण व परीक्षा फी माफी + दरमहा निर्वाह भत्ता थेट बँक खात्यात.",
+        eligibility_en: "Students belonging to OBC/VJNT/SBC category having family income <= ₹1.5L - ₹2.5L.",
+        eligibility_mr: "ओबीसी, व्हीजेएनटी किंवा एसबीसी प्रवर्गातील विद्यार्थी ज्यांचे उत्पन्न विहित मर्यादेत आहे.",
+        docs: ["Caste Certificate", "Non-Creamy Layer (valid)", "Income Certificate", "Marksheet"],
+        deadline: "31 Oct 2026",
+        portal: "https://mahadbt.maharashtra.gov.in/",
+        portalName: "MahaDBT Samaj Kalyan"
+      },
+      {
+        id: "sch_5",
+        title_en: "National Means-cum-Merit Scholarship (NMMS)",
+        title_mr: "राष्ट्रीय आर्थिक दुर्बल घटक शिष्यवृत्ती योजना (NMMS)",
+        org: "Ministry of Education, Central Govt",
+        tag: "STUDENT",
+        tagClass: "tag-open",
+        edu: ["10TH", "12TH"],
+        incomeLimit: "2.5L",
+        category: ["ALL"],
+        benefit_en: "₹12,000 per year (₹1,000 per month) from 9th standard through 12th standard.",
+        benefit_mr: "९वी ते १२वी पर्यंत दरवर्षी ₹१२,००० (दरमहा ₹१,०००) आर्थिक साहाय्य.",
+        eligibility_en: "Students studying in government / aided schools with minimum 55% marks and family income <= ₹3.5L.",
+        eligibility_mr: "शासकीय किंवा अनुदानित शाळेत शिकणारे ग्रामीण विद्यार्थी ज्यांचे कौटुंबिक उत्पन्न ३.५ लाखांच्या आत आहे.",
+        docs: ["School Bonafide Certificate", "Marksheet", "Parent Income Certificate", "Aadhaar Card"],
+        deadline: "20 Oct 2026",
+        portal: "https://scholarships.gov.in/",
+        portalName: "National Scholarship Portal (NSP)"
+      },
+      {
+        id: "sch_6",
+        title_en: "Government of India Post-Matric Scholarship for SC Students",
+        title_mr: "अनुसूचित जाती (SC) मॅट्रिकोत्तर केंद्र पुरस्कृत शिष्यवृत्ती",
+        org: "Social Justice & Special Assistance Dept",
+        tag: "CASTE",
+        tagClass: "tag-gov",
+        edu: ["10TH", "12TH", "DIPLOMA", "DEGREE"],
+        incomeLimit: "2.5L",
+        category: ["SC"],
+        benefit_en: "100% Course Fee reimbursement + Books Allowance + Monthly hostel maintenance.",
+        benefit_mr: "१००% संपूर्ण फी प्रतिपूर्ती + शैक्षणिक पुस्तके भत्ता + वसतिगृह दरमहा खर्च.",
+        eligibility_en: "SC students pursuing 11th, 12th, Diploma, ITI or Degree courses with income <= ₹2.5L.",
+        eligibility_mr: "११वी, १२वी, पदविका किंवा पदवी शिक्षण घेणारे अनुसूचित जातीचे विद्यार्थी.",
+        docs: ["Caste Certificate", "Caste Validity (for degree/prof)", "Income Certificate", "Passbook"],
+        deadline: "30 Nov 2026",
+        portal: "https://mahadbt.maharashtra.gov.in/",
+        portalName: "MahaDBT Social Justice"
+      }
+    ];
+
+    const ROADMAP_DATA = {
+      "10TH": [
+        {
+          id: "poly",
+          title_en: "Diploma / Polytechnic",
+          title_mr: "पॉलिटेक्निक पदविका (३ वर्षे)",
+          badge_en: "Direct 2nd Yr Engg",
+          badge_mr: "थेट द्वितीय वर्ष बी.टेक",
+          desc_en: "Mechanical, Civil, Computer, Electrical engineering diplomas leading straight to technical jobs or direct 2nd-year B.Tech admission.",
+          desc_mr: "तांत्रिक शिक्षणाची उत्तम संधी. यानंतर थेट शासकीय किंवा खाजगी कंपनीत नोकरी अथवा इंजिनिअरिंगच्या दुसऱ्या वर्षात थेट प्रवेश मिळतो.",
+          tags: ["Duration: 3 Years", "Admission: 10th Marks", "Govt Scholarships Eligible"]
+        },
+        {
+          id: "iti",
+          title_en: "ITI Trades (Electrician / Fitter)",
+          title_mr: "आयटीआय (ITI) व्यावसायिक ट्रेड्स",
+          badge_en: "Fast Village Employment",
+          badge_mr: "त्वरित रोजगार व स्वयंरोजगार",
+          desc_en: "1 to 2 years hands-on vocational courses. Ideal for rural youth wanting early earnings, railway apprentice jobs, or MSEB lineman posts.",
+          desc_mr: "१ ते २ वर्षांचे प्रात्यक्षिक प्रशिक्षण (इलेक्ट्रिशियन, फिटर, वेल्डर). रेल्वे, महावितरण आणि स्थानिक उद्योगांमध्ये तातडीने रोजगार मिळवण्यासाठी उत्तम.",
+          tags: ["Duration: 1-2 Years", "Apprenticeship Backing", "Low Fees"]
+        },
+        {
+          id: "sci11",
+          title_en: "11th & 12th Science",
+          title_mr: "११वी व १२वी विज्ञान शाखा (Science)",
+          badge_en: "Medical / Engg Gateway",
+          badge_mr: "डॉक्टर / इंजिनिअरिंगसाठी आवश्यक",
+          desc_en: "Gateway for MHT-CET, NEET, JEE, and Agriculture BSc admissions. Opens doors for technical and medical careers.",
+          desc_mr: "एमएचटी-सीईटी, नीट, कृषी पदवी (BSc Agri) आणि एनडीए संरक्षण दलात जाण्यासाठी अनिवार्य पाया.",
+          tags: ["Duration: 2 Years", "Pre-University", "Competitive Exams Base"]
+        },
+        {
+          id: "arts_comm",
+          title_en: "11th-12th Arts / Commerce / Banking",
+          title_mr: "११वी-१२वी कला व वाणिज्य (Arts / Commerce)",
+          badge_en: "Govt Exams / Banking",
+          badge_mr: "बँकिंग व प्रशासकीय सेवा",
+          desc_en: "Great platform for competitive exams (Police Bharti, Talathi, MPSC), accounting, and legal degrees with moderate study costs.",
+          desc_mr: "पोलीस भरती, तलाठी, ग्रामसेवक, एमपीएससी स्पर्धा परीक्षा आणि सीए/बँकिंग क्षेत्रासाठी कमी खर्चात उत्तम पर्याय.",
+          tags: ["Duration: 2 Years", "Police Bharti Base", "MPSC/Civil Services"]
+        }
+      ],
+      "12TH": [
+        {
+          id: "agri",
+          title_en: "B.Sc Agriculture / Horticulture",
+          title_mr: "बी.एस्सी कृषी (B.Sc Agriculture)",
+          badge_en: "Best for Farmer Wards",
+          badge_mr: "शेतकरी कुटुंबांसाठी आदर्श",
+          desc_en: "State Agricultural Universities (Rahuri, Dapoli, Akola, Parbhani). Direct reservation points for children of farming families.",
+          desc_mr: "शेतकरी पाल्यांना १२ अतिरिक्त गुण राखीव. कृषी अधिकारी, बँकिंग ॲग्री ऑफिसर आणि बियाणे उद्योगात उच्च पगाराच्या संधी.",
+          tags: ["Duration: 4 Years", "Entrance: MHT-CET", "Farmer Ward Quota"]
+        },
+        {
+          id: "engg",
+          title_en: "B.Tech / B.E Engineering & IT",
+          title_mr: "इंजिनिअरिंग व तंत्रज्ञान (B.Tech / B.E)",
+          badge_en: "50-100% Fee Waiver",
+          badge_mr: "ईबीसी व मुलींना मोफत फी",
+          desc_en: "Computer, AI/ML, Electrical, Civil. Fully covered by MahaDBT tuition waivers for EBC, OBC, and 100% free for girl students.",
+          desc_mr: "माहिती तंत्रज्ञान, कॉम्प्युटर आणि सिव्हिल. ईबीसीसाठी ५०% तर पात्र मुलींसाठी शासन नियमानुसार १००% शिक्षण शुल्क माफी.",
+          tags: ["Duration: 4 Years", "Govt Hostels Available", "MHT-CET / JEE"]
+        },
+        {
+          id: "police_defence",
+          title_en: "Police Bharti / Defense (Agniveer)",
+          title_mr: "महाराष्ट्र पोलीस भरती व संरक्षण दल (अग्निवीर)",
+          badge_en: "Direct Govt Job",
+          badge_mr: "थेट शासकीय नोकरी",
+          desc_en: "Immediate career path after 12th standard. Requires physical fitness regimen and Marathi/General Knowledge written exam prep.",
+          desc_mr: "१२वीनंतर थेट शासकीय सेवा. शारीरिक चाचणी व सामान्य ज्ञान लेखी परीक्षेच्या माध्यमातून शासकीय सेवेत थेट सन्मान.",
+          tags: ["Min Age: 18", "Physical Test + Written", "Fast Induction"]
+        },
+        {
+          id: "paramedical",
+          title_en: "D.Pharm / Nursing (ANM/GNM) / Paramedical",
+          title_mr: "फार्मसी (औषधनिर्माण) व नर्सिंग (ANM/GNM)",
+          badge_en: "Medical Self-Employment",
+          badge_mr: "आरोग्य सेवा व मेडिकल स्टोअर",
+          desc_en: "D.Pharm opens license for village medical chemist shop. Nursing courses guarantee hospital jobs across taluka and cities.",
+          desc_mr: "डी.फार्म पूर्ण करून गावात मेडिकल स्टोअर सुरु करता येते. नर्सिंग पूर्ण केल्यास सरकारी व खाजगी रुग्णालयात १००% नोकरी हमी.",
+          tags: ["Duration: 2-3 Years", "Pharmacy Council Reg.", "High Demand"]
+        }
+      ]
+    };
+
+    const DOCS_LIST = [
+      { id: "doc_income", name_en: "Annual Income Certificate (Tahsildar)", name_mr: "तहसीलदारांचा उत्पन्नाचा दाखला", ready: true },
+      { id: "doc_domicile", name_en: "Domicile & Nationality Certificate", name_mr: "अधिवास व राष्ट्रीयत्व दाखला (डोमिसाईल)", ready: true },
+      { id: "doc_aadhaar", name_en: "Aadhaar Card (Linked with Bank NPCI)", name_mr: "आधार कार्ड (बँक खात्याशी लिंक असलेले)", ready: true },
+      { id: "doc_marksheet", name_en: "Previous Standard Marksheets (10th/12th)", name_mr: "मागील वर्षाची गुणपत्रिका (१०वी / १२वी)", ready: false },
+      { id: "doc_caste", name_en: "Caste Certificate & Validity (if reserved)", name_mr: "जातीचा दाखला व जात वैधता प्रमाणपत्र", ready: false },
+      { id: "doc_farm", name_en: "7/12 Extract or Alpabhudharak (For Farmer Ward)", name_mr: "७/१२ उतारा किंवा अल्पभूधारक प्रमाणपत्र", ready: false }
+    ];
+
+    const I18N = {
+      en: {
+        badgeGov: "MAKE IN INDIA • 2026",
+        switchPersona: "Switch Quick Profile (No Password)",
+        heroBadgeDirect: "Open Access Dashboard • No Login Required",
+        heroGreeting: "Namaste, Welcome to Gramoday!",
+        heroTagline: "Find scholarships, calculate document eligibility, and choose the right post-10th/12th career path without middlemen or confusion.",
+        btnExploreSchemes: "Explore Schemes (100+ Live)",
+        btnCareerMap: "Career Tree (After 10th / 12th)",
+        btnDocWallet: "Doc Readiness (Checklist)",
+        statIndexed: "Schemes Indexed",
+        statIndexedSub: "Maharashtra & Central",
+        statMatch: "Your Matches",
+        statMatchSub: "Instant Qualified",
+        statFund: "Direct Aid Pool",
+        statFundSub: "Fee Waivers / DBT",
+        statUrgent: "Urgent Deadlines",
+        statUrgentSub: "Closing Soon",
+        schemesHeading: "Verified Government & Trust Schemes",
+        schemesSub: "Filtered according to your selected criteria. Instant eligibility without paperwork delays.",
+        btnReset: "Reset",
+        filterAll: "All Schemes",
+        filterStudent: "🎓 10th & 12th Students",
+        filterGirls: "🌸 Girls Higher Education (100% Free)",
+        filterFarmer: "🌾 Farmer Family Wards",
+        filterEbc: "📄 EBC / Open Merit",
+        filterCaste: "⚖️ SC / ST / OBC / VJNT",
+        optAllEdu: "All Education Stages",
+        optAllIncome: "All Income Brackets",
+        roadmapTitle: "Career Pathways Tree (What After 10th & 12th?)",
+        roadmapSub: "Click any path to view qualifications, entrance tests, and subsidized college options for village students.",
+        walletTitle: "Dastavej (Document) Readiness Checklist",
+        walletSub: "Tick off the certificates you have ready. Never miss a deadline due to missing documents!",
+        docNotice: "Village Gram Panchayat (Tahasildar Office / Aaple Sarkar Kendra) provides Domicile and Income certificates within 7 to 15 days.",
+        mottoTitle: "“Think Local • Innovate Indian • Impact Society”",
+        mottoDesc: "Make in India Social Innovation Challenge 2026. Empowering first-generation rural families with digital equality and transparent scholarship access.",
+        dockSchemes: "Schemes",
+        dockRoadmap: "Career",
+        dockWallet: "Docs",
+        dockHelp: "Help",
+        mBenefit: "Financial Assistance / Benefits:",
+        mEligibility: "Who is eligible?",
+        mDocs: "Mandatory Documents Required:",
+        mDeadline: "Application Deadline:",
+        mPortal: "Official Portal:",
+        btnApplyGov: "Open Official Portal to Apply",
+        btnVoiceListen: "Listen Audio Guide",
+        guideTitle: "Help & Offline Assistance for Villages",
+        guideP1: "Need help applying? In most villages, you can visit the nearest Aaple Sarkar Seva Kendra or CSC (Common Service Center) with the documents marked in the checklist."
+      },
+      mr: {
+        badgeGov: "मेक इन इंडिया • सोशल इनोव्हेशन २०२६",
+        switchPersona: "थेट प्रोफाईल निवडा (पासवर्डची गरज नाही)",
+        heroBadgeDirect: "खुला डॅशबोर्ड • थेट विनामूल्य प्रवेश",
+        heroGreeting: "नमस्ते, ग्रामोदय डॅशबोर्डवर आपले स्वागत आहे!",
+        heroTagline: "शासकीय व खाजगी शिष्यवृत्ती शोधा, आवश्यक कागदपत्रांची पडताळणी करा आणि १०वी-१२वीनंतर योग्य करिअर निवडा – मध्यस्थांशिवाय!",
+        btnExploreSchemes: "पात्र योजना पहा (१००+ योजना)",
+        btnCareerMap: "करिअर रोडमॅप (१०वी-१२वीनंतर काय?)",
+        btnDocWallet: "कागदपत्रे तपासणी (दस्तावेज)",
+        statIndexed: "एकूण नोंदणीकृत योजना",
+        statIndexedSub: "केंद्र व महाराष्ट्र शासन",
+        statMatch: "तुमच्यासाठी पात्र योजना",
+        statMatchSub: "थेट लाभ उपलब्ध",
+        statFund: "थेट मदत निधी",
+        statFundSub: "१००% फी माफी / डीबीटी",
+        statUrgent: "तातडीच्या मुदती",
+        statUrgentSub: "अर्ज करणे सुरु आहे",
+        schemesHeading: "अधिकृत शासकीय व ट्रस्ट शिष्यवृत्ती",
+        schemesSub: "निवडलेल्या माहितीनुसार जुळणाऱ्या योजना. कोणतेही शुल्क किंवा विलंब नाही.",
+        btnReset: "रिसेट करा",
+        filterAll: "सर्व योजना",
+        filterStudent: "🎓 १०वी व १२वी विद्यार्थी",
+        filterGirls: "🌸 मुलींचे उच्च शिक्षण (१००% मोफत)",
+        filterFarmer: "🌾 शेतकरी कुटुंब पाल्ये",
+        filterEbc: "📄 ईबीसी / खुला प्रवर्ग",
+        filterCaste: "⚖️ एससी / एसटी / ओबीसी / भटके विमुक्त",
+        optAllEdu: "सर्व शिक्षण स्तर",
+        optAllIncome: "सर्व उत्पन्न स्तर",
+        roadmapTitle: "करिअर मार्गदर्शक झाड (१०वी आणि १२वीनंतर पुढे काय?)",
+        roadmapSub: "कोणत्याही शाखेवर क्लिक करा आणि प्रवेश परीक्षा, शासकीय कॉलेज आणि शिष्यवृत्तीची संपूर्ण माहिती मिळवा.",
+        walletTitle: "कागदपत्रे तयारी यादी (दस्तावेज वॉलेट)",
+        walletSub: "तुमच्याकडे असलेले कागदपत्रे टिक करा. ऐनवेळी अर्ज करताना कागदपत्रे अपूर्ण राहू नयेत म्हणून ही सोय!",
+        docNotice: "आपल्या गावातील 'आपले सरकार सेवा केंद्र' किंवा तहसील कार्यालयातून उत्पन्न आणि रहिवासी दाखला ७ ते १५ दिवसात मिळतो.",
+        mottoTitle: "“स्थानिक विचार • भारतीय संशोधन • सामाजिक परिवर्तन”",
+        mottoDesc: "मेक इन इंडिया सोशल इनोव्हेशन २०२६. ग्रामीण भागातील पहिल्या पिढीतील विद्यार्थ्यांना शासकीय योजनांचा थेट लाभ मिळवून देणारा डिजिटल मंच.",
+        dockSchemes: "योजना",
+        dockRoadmap: "करिअर",
+        dockWallet: "दस्तावेज",
+        dockHelp: "मदत केंद्र",
+        mBenefit: "योजनेचे आर्थिक लाभ व स्वरूप:",
+        mEligibility: "या योजनेसाठी कोण पात्र आहे?",
+        mDocs: "आवश्यक मूळ कागदपत्रे:",
+        mDeadline: "अर्जाची अंतिम तारीख:",
+        mPortal: "अधिकृत सरकारी पोर्टल:",
+        btnApplyGov: "अधिकृत सरकारी पोर्टलवर अर्ज करा",
+        btnVoiceListen: "योजनेची माहिती आवाजात ऐका",
+        guideTitle: "ग्रामीण विद्यार्थ्यांसाठी ऑफलाइन मदत केंद्र",
+        guideP1: "अर्ज भरण्यासाठी इंटरनेट किंवा कॉम्पुटर नसेल तर आपल्या गावातील 'आपले सरकार सेवा केंद्र' किंवा सीएससी (CSC) केंद्रात जाऊन वरील कागदपत्रांसह मोफत अथवा नाममात्र शुल्कात अर्ज भरता येतो."
+      }
+    };
+
+    let currentLanguage = 'mr'; // default Marathi for village users
+    let activeQuickCategory = 'ALL';
+    let activeTreeStage = '10TH';
+    let currentSelectedSchemeForModal = SCHEMES_DATABASE[0];
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Check saved language
+      const savedLang = localStorage.getItem('gramoday_dash_lang');
+      if (savedLang) {
+        currentLanguage = savedLang;
+      }
+      updateLanguageUI();
+      renderSchemes();
+      renderRoadmapTree();
+      renderDocumentChecklist();
+    });
+
+    function toggleDashboardLang() {
+      currentLanguage = (currentLanguage === 'mr') ? 'en' : 'mr';
+      localStorage.setItem('gramoday_dash_lang', currentLanguage);
+      updateLanguageUI();
+      renderSchemes();
+      renderRoadmapTree();
+      renderDocumentChecklist();
+    }
+
+    function updateLanguageUI() {
+      document.getElementById('langText').innerText = (currentLanguage === 'mr') ? 'English' : 'मराठी';
+      
+      const dict = I18N[currentLanguage];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          el.innerHTML = dict[key];
+        }
+      });
+    }
+
+    function applyPersona(personaKey) {
+      const profileLabel = document.getElementById('currentProfileName');
+      const eduSelect = document.getElementById('eduFilterSelect');
+      const incomeSelect = document.getElementById('incomeFilterSelect');
+
+      if (personaKey === 'student_obc') {
+        profileLabel.innerText = (currentLanguage === 'mr') ? 'विद्यार्थी (१२वी सायन्स OBC)' : 'Student (12th OBC)';
+        eduSelect.value = '12TH';
+        incomeSelect.value = '2.5L';
+        setQuickCategory('CASTE');
+      } else if (personaKey === 'farmer_ward') {
+        profileLabel.innerText = (currentLanguage === 'mr') ? 'शेतकरी पाल्य (७/१२ धारक)' : 'Farmer Ward (7/12 Holder)';
+        eduSelect.value = 'DEGREE';
+        incomeSelect.value = '8.0L';
+        setQuickCategory('FARMER');
+      } else if (personaKey === 'girl_higher') {
+        profileLabel.innerText = (currentLanguage === 'mr') ? 'मुलींचे मोफत उच्च शिक्षण' : 'Girl Higher Ed (100% Free)';
+        eduSelect.value = 'DEGREE';
+        incomeSelect.value = '8.0L';
+        setQuickCategory('GIRLS');
+      } else if (personaKey === 'ebc_engg') {
+        profileLabel.innerText = (currentLanguage === 'mr') ? 'खुला/ईबीसी (इंजिनिअरिंग/पदवी)' : 'General / EBC Degree';
+        eduSelect.value = 'DEGREE';
+        incomeSelect.value = '8.0L';
+        setQuickCategory('EBC');
+      } else {
+        profileLabel.innerText = (currentLanguage === 'mr') ? 'अतिथी (सर्व योजना)' : 'Guest (All Schemes)';
+        resetFilter();
+      }
+    }
+
+    function setQuickCategory(categoryCode, element) {
+      activeQuickCategory = categoryCode;
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      if (element) {
+        element.classList.add('active');
+      }
+      renderSchemes();
+    }
+
+    function resetFilter() {
+      activeQuickCategory = 'ALL';
+      document.getElementById('schemeSearchInput').value = '';
+      document.getElementById('eduFilterSelect').value = 'ALL';
+      document.getElementById('incomeFilterSelect').value = 'ALL';
+      document.querySelectorAll('.filter-chip').forEach((c, idx) => {
+        c.classList.toggle('active', idx === 0);
+      });
+      renderSchemes();
+    }
+
+    function handleSearch() {
+      renderSchemes();
+    }
+
+    function renderSchemes() {
+      const container = document.getElementById('schemesCardsList');
+      const searchQuery = document.getElementById('schemeSearchInput').value.toLowerCase().trim();
+      const eduVal = document.getElementById('eduFilterSelect').value;
+      const incVal = document.getElementById('incomeFilterSelect').value;
+
+      const filtered = SCHEMES_DATABASE.filter(item => {
+        // Quick Category Filter
+        if (activeQuickCategory !== 'ALL') {
+          if (activeQuickCategory === 'STUDENT' && !item.edu.includes('10TH') && !item.edu.includes('12TH')) return false;
+          if (activeQuickCategory === 'GIRLS' && item.tag !== 'GIRLS') return false;
+          if (activeQuickCategory === 'FARMER' && item.tag !== 'FARMER') return false;
+          if (activeQuickCategory === 'EBC' && item.tag !== 'EBC') return false;
+          if (activeQuickCategory === 'CASTE' && item.tag !== 'CASTE') return false;
+        }
+
+        // Education Dropdown Filter
+        if (eduVal !== 'ALL' && !item.edu.includes(eduVal)) {
+          return false;
+        }
+
+        // Income Dropdown Filter
+        if (incVal === '2.5L' && item.incomeLimit !== '2.5L') {
+          return false;
+        }
+
+        // Text Search
+        if (searchQuery) {
+          const matchTitleEn = item.title_en.toLowerCase().includes(searchQuery);
+          const matchTitleMr = item.title_mr.toLowerCase().includes(searchQuery);
+          const matchOrg = item.org.toLowerCase().includes(searchQuery);
+          const matchBenefit = item.benefit_en.toLowerCase().includes(searchQuery) || item.benefit_mr.toLowerCase().includes(searchQuery);
+          if (!matchTitleEn && !matchTitleMr && !matchOrg && !matchBenefit) {
+            return false;
+          }
+        }
+
+        return true;
+      });
+
+      document.getElementById('matchCounter').innerText = filtered.length;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-5 bg-white rounded-4 border">
+            <i class="bi bi-search text-muted fs-1 mb-2"></i>
+            <h6 class="fw-bold text-dark">${currentLanguage === 'mr' ? 'कोणतीही योजना सापडली नाही' : 'No matching schemes found'}</h6>
+            <p class="small text-muted mb-2">${currentLanguage === 'mr' ? 'कृपया फिल्टर बदला किंवा रीसेट बटण दाबा.' : 'Please adjust your filters or reset.'}</p>
+            <button class="btn btn-sm btn-outline-success rounded-pill px-3" onclick="resetFilter()">Reset Filters</button>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      filtered.forEach(sch => {
+        const title = (currentLanguage === 'mr') ? sch.title_mr : sch.title_en;
+        const benefit = (currentLanguage === 'mr') ? sch.benefit_mr : sch.benefit_en;
+        const listenText = (currentLanguage === 'mr') ? 'माहिती ऐका' : 'Listen';
+        const applyText = (currentLanguage === 'mr') ? 'तपशील व अर्ज' : 'Details & Apply';
+
+        html += `
+          <div class="scheme-card">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-1 mb-1">
+              <span class="scheme-tag ${sch.tagClass}">${sch.tag}</span>
+              <div class="d-flex align-items-center gap-2">
+                <span class="small text-danger fw-bold" style="font-size: 0.72rem;">
+                  <i class="bi bi-hourglass-split me-1"></i>${sch.deadline}
+                </span>
+                <button class="tts-speaker-btn" onclick="speakSchemeSummary('${sch.id}')" title="Listen Audio Guide">
+                  <i class="bi bi-volume-up-fill"></i>
+                </button>
+              </div>
+            </div>
+
+            <h5 class="fw-bold fs-6 text-dark mt-1 mb-1">${title}</h5>
+            <small class="text-muted d-block mb-2" style="font-size: 0.75rem;"><i class="bi bi-building me-1"></i>${sch.org}</small>
+
+            <div class="p-2 rounded-3 bg-light border mb-2">
+              <small class="text-dark fw-semibold d-block" style="font-size: 0.78rem;">
+                <i class="bi bi-check2-circle text-success me-1"></i>${benefit}
+              </small>
+            </div>
+
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 pt-1 border-top">
+              <div class="d-flex align-items-center gap-1 text-muted small" style="font-size: 0.72rem;">
+                <i class="bi bi-file-earmark-check text-primary"></i>
+                <span>${sch.docs.length} ${currentLanguage === 'mr' ? 'कागदपत्रे आवश्यक' : 'docs required'}</span>
+              </div>
+              <button class="btn btn-sm btn-success fw-bold px-3 py-1 rounded-3" onclick="openSchemeDetailModal('${sch.id}')" style="background: var(--primary); font-size: 0.78rem;">
+                ${applyText} <i class="bi bi-arrow-right-short"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function switchTreeStage(stage) {
+      activeTreeStage = stage;
+      document.getElementById('btnTree10').classList.toggle('active', stage === '10TH');
+      document.getElementById('btnTree12').classList.toggle('active', stage === '12TH');
+      renderRoadmapTree();
+    }
+
+    function renderRoadmapTree() {
+      const container = document.getElementById('treeNodesContainer');
+      const nodes = ROADMAP_DATA[activeTreeStage];
+
+      let html = '';
+      nodes.forEach((n, idx) => {
+        const title = (currentLanguage === 'mr') ? n.title_mr : n.title_en;
+        const badge = (currentLanguage === 'mr') ? n.badge_mr : n.badge_en;
+        html += `
+          <div class="col-6 col-md-3">
+            <div class="flow-node ${idx === 0 ? 'active' : ''}" onclick="selectTreeNode('${n.id}', this)">
+              <span class="badge bg-warning text-dark mb-1" style="font-size: 0.62rem;">${badge}</span>
+              <h6 class="fw-bold fs-6 mb-1 text-dark">${title}</h6>
+              <small class="text-muted d-block" style="font-size: 0.7rem;">${n.tags[0]}</small>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      // Select first node as default preview
+      if (nodes.length > 0) {
+        showNodeDetails(nodes[0]);
+      }
+    }
+
+    function selectTreeNode(nodeId, element) {
+      document.querySelectorAll('.flow-node').forEach(el => el.classList.remove('active'));
+      if (element) element.classList.add('active');
+
+      const found = ROADMAP_DATA[activeTreeStage].find(item => item.id === nodeId);
+      if (found) {
+        showNodeDetails(found);
+      }
+    }
+
+    function showNodeDetails(node) {
+      document.getElementById('detailTitle').innerText = (currentLanguage === 'mr') ? node.title_mr : node.title_en;
+      document.getElementById('detailDescription').innerText = (currentLanguage === 'mr') ? node.desc_mr : node.desc_en;
+      document.getElementById('detailBadge').innerText = (currentLanguage === 'mr') ? node.badge_mr : node.badge_en;
+
+      const tagsContainer = document.getElementById('detailTags');
+      tagsContainer.innerHTML = node.tags.map(t => `<span class="badge bg-white text-dark border">${t}</span>`).join(' ');
+    }
+
+    function renderDocumentChecklist() {
+      const container = document.getElementById('docChecklistContainer');
+      let html = '';
+
+      DOCS_LIST.forEach((doc, idx) => {
+        const name = (currentLanguage === 'mr') ? doc.name_mr : doc.name_en;
+        html += `
+          <div class="col-12 col-md-6">
+            <div class="doc-item ${doc.ready ? 'checked' : ''}" id="docWrap_${doc.id}" onclick="toggleDocCheck(${idx})">
+              <div class="d-flex align-items-center gap-2">
+                <input class="form-check-input mt-0" type="checkbox" ${doc.ready ? 'checked' : ''} id="check_${doc.id}" onclick="event.stopPropagation(); toggleDocCheck(${idx});">
+                <label class="form-check-label small fw-semibold text-dark mb-0" style="cursor: pointer;">
+                  ${name}
+                </label>
+              </div>
+              <span class="badge ${doc.ready ? 'bg-success' : 'bg-secondary'} rounded-pill small" id="badge_${doc.id}" style="font-size: 0.65rem;">
+                ${doc.ready ? (currentLanguage === 'mr' ? 'तयार आहे' : 'Ready') : (currentLanguage === 'mr' ? 'बाकी आहे' : 'Pending')}
+              </span>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      updateDocProgress();
+    }
+
+    function toggleDocCheck(index) {
+      DOCS_LIST[index].ready = !DOCS_LIST[index].ready;
+      renderDocumentChecklist();
+    }
+
+    function updateDocProgress() {
+      const total = DOCS_LIST.length;
+      const readyCount = DOCS_LIST.filter(d => d.ready).length;
+      const percent = Math.round((readyCount / total) * 100);
+
+      const bar = document.getElementById('docProgressBar');
+      const badge = document.getElementById('docReadinessPercentage');
+
+      bar.style.width = `${percent}%`;
+      badge.innerText = `${percent}% ${currentLanguage === 'mr' ? 'तयारी पूर्ण' : 'Ready'}`;
+    }
+
+    function openSchemeDetailModal(schemeId) {
+      const sch = SCHEMES_DATABASE.find(s => s.id === schemeId);
+      if (!sch) return;
+
+      currentSelectedSchemeForModal = sch;
+
+      const title = (currentLanguage === 'mr') ? sch.title_mr : sch.title_en;
+      const benefit = (currentLanguage === 'mr') ? sch.benefit_mr : sch.benefit_en;
+      const eligibility = (currentLanguage === 'mr') ? sch.eligibility_mr : sch.eligibility_en;
+
+      document.getElementById('modalSchemeName').innerText = title;
+      document.getElementById('modalSchemeOrg').innerText = sch.org;
+      document.getElementById('modalBenefitDesc').innerText = benefit;
+      document.getElementById('modalEligibilityList').innerHTML = `<li>${eligibility}</li>`;
+      document.getElementById('modalDeadline').innerText = sch.deadline;
+      document.getElementById('modalPortalName').innerText = sch.portalName;
+      document.getElementById('modalDirectLink').href = sch.portal;
+
+      // Populate docs badges
+      const docBadgesContainer = document.getElementById('modalDocBadges');
+      docBadgesContainer.innerHTML = sch.docs.map(d => `<span class="badge bg-light text-dark border p-2 mb-1">${d}</span>`).join(' ');
+
+      const modalObj = new bootstrap.Modal(document.getElementById('schemeDetailModal'));
+      modalObj.show();
+    }
+
+    function openApplyGuidanceModal() {
+      const modalObj = new bootstrap.Modal(document.getElementById('guidanceModal'));
+      modalObj.show();
+    }
+
+    function speakSchemeSummary(schemeId) {
+      const sch = SCHEMES_DATABASE.find(s => s.id === schemeId);
+      if (!sch) return;
+
+      if (!('speechSynthesis' in window)) {
+        alert(currentLanguage === 'mr' ? 'आपल्या ब्राउझरमध्ये व्हॉइस असिस्टंट सपोर्ट उपलब्ध नाही.' : 'Text-to-speech is not supported on this browser.');
+        return;
+      }
+
+      window.speechSynthesis.cancel(); // Stop active speaking
+
+      const textToSpeak = (currentLanguage === 'mr') 
+        ? `${sch.title_mr}. या योजनेतून मिळणारा लाभ: ${sch.benefit_mr}. शेवटची तारीख: ${sch.deadline}.`
+        : `${sch.title_en}. Benefit: ${sch.benefit_en}. Last date to apply is ${sch.deadline}.`;
+
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      utterance.lang = (currentLanguage === 'mr') ? 'mr-IN' : 'en-IN';
+      utterance.rate = 0.95;
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function speakCurrentModal() {
+      if (currentSelectedSchemeForModal) {
+        speakSchemeSummary(currentSelectedSchemeForModal.id);
+      }
+    }
+
+    function scrollToSection(sectionId, btnElement) {
+      if (btnElement) {
+        document.querySelectorAll('.dock-tab').forEach(t => t.classList.remove('active'));
+        btnElement.classList.add('active');
+      }
+      const target = document.getElementById(sectionId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  </script>
+</body>
+</html>
