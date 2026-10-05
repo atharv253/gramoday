@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Gramoday | Rural Education & Scholarship Ecosystem</title>
   
   <!-- Bootstrap 5 & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   
-  <!-- Google Fonts: Plus Jakarta Sans -->
+  <!-- Google Fonts: Plus Jakarta Sans & Noto Sans Devanagari -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -41,79 +41,78 @@
       overflow-x: hidden;
     }
 
-    /* Navbar */
+    /* Plain & Clean Navbar */
     .navbar {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
+      background: #ffffff;
       border-bottom: 1px solid var(--border-color);
-      padding: 0.75rem 1rem;
+      padding: 0.65rem 1rem;
       position: sticky;
       top: 0;
       z-index: 1000;
     }
 
     .brand-logo {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
       background: #ffffff;
       padding: 2px;
       object-fit: contain;
-      border: 1.5px solid #d1fae5;
-      box-shadow: 0 4px 10px rgba(13, 92, 58, 0.12);
+      border: 1px solid #d1fae5;
+      flex-shrink: 0;
     }
 
-    .brand-text h5 {
+    .brand-title {
       font-weight: 800;
       font-size: 1.15rem;
       margin: 0;
       color: var(--primary-dark);
-      letter-spacing: -0.4px;
-      line-height: 1.1;
+      letter-spacing: -0.3px;
+      line-height: 1;
     }
 
-    .brand-text small {
-      font-size: 0.65rem;
-      color: var(--text-muted);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
+    /* Language Switcher Button with Icon */
     .btn-lang {
       font-size: 0.78rem;
       font-weight: 700;
-      border: 1.5px solid var(--primary);
-      color: var(--primary);
-      background: transparent;
-      border-radius: 30px;
-      padding: 0.35rem 0.85rem;
+      border: 1px solid var(--border-color);
+      color: var(--navy);
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 0.35rem 0.65rem;
       transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
       gap: 5px;
+      white-space: nowrap;
+    }
+
+    .btn-lang i {
+      color: var(--primary);
+      font-size: 0.85rem;
     }
 
     .btn-lang:hover {
-      background: var(--primary);
-      color: #ffffff;
+      background: #f1f5f9;
+      border-color: #cbd5e1;
     }
 
-    /* Simple, Clean & Responsive Login Button */
+    /* Full-text Login Button (Visible on both Desktop & Mobile) */
     .btn-login-nav {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
       background: var(--primary);
       color: #ffffff;
       border: 1px solid var(--primary);
       border-radius: 8px;
-      padding: 0.38rem 0.95rem;
+      padding: 0.35rem 0.8rem;
       transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       text-decoration: none;
-      box-shadow: 0 2px 6px rgba(13, 92, 58, 0.2);
+      box-shadow: 0 1px 3px rgba(13, 92, 58, 0.15);
+      white-space: nowrap;
     }
 
     .btn-login-nav:hover {
@@ -362,9 +361,11 @@
 </head>
 <body>
 
-  <!-- NAVBAR -->
+  <!-- PLAIN & CLEAN NAVBAR -->
   <nav class="navbar">
-    <div class="container-fluid max-container d-flex align-items-center justify-content-between">
+    <div class="container-fluid max-container d-flex align-items-center justify-content-between p-0">
+      
+      <!-- Logo + Gramoday Name Only -->
       <div class="d-flex align-items-center gap-2">
         <img 
           src="Gramodaylogo.jpg" 
@@ -373,23 +374,22 @@
           referrerpolicy="no-referrer"
           onerror="this.onerror=null; this.src='https://lh3.googleusercontent.com/d/1-_7ZvecrqoiGLQ_D-Af_uvZA5LkRFc0N';"
         >
-        <div class="brand-text">
-          <h5>GRAMODAY</h5>
-          <small data-i18n="navSubtitle">RURAL EMPOWERMENT</small>
-        </div>
+        <span class="brand-title">Gramoday</span>
       </div>
 
+      <!-- Controls: Language Toggle with Icon & Full Login Button -->
       <div class="d-flex align-items-center gap-2">
-        <!-- Language Switcher Toggle -->
-        <button class="btn-lang" onclick="toggleLanguage()" id="langToggleBtn" title="Change Language">
+        
+        <!-- Language Switcher Button with Icon (Default shows मराठी as switch option) -->
+        <button class="btn-lang" onclick="toggleLanguage()" id="langToggleBtn" title="Change Language / भाषा बदला">
           <i class="bi bi-translate"></i>
           <span id="langLabel">मराठी</span>
         </button>
 
-        <!-- Clean Login Button connected to login.html -->
-        <a href="login.html" class="btn-login-nav" onclick="goToLogin(event)">
+        <!-- Clean Login Button (Shows full word 'Login' on all screens) -->
+        <a href="login.html" class="btn-login-nav" onclick="goToLogin(event)" title="Portal Login">
           <i class="bi bi-box-arrow-in-right"></i>
-          <span class="d-none d-sm-inline" data-i18n="portalBtn">Login</span>
+          <span data-i18n="portalBtn">Login</span>
         </a>
       </div>
     </div>
@@ -589,7 +589,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // Navigation to login.html (Works on local files as well as Google Apps Script)
+    // Navigation to login.html
     function goToLogin(e) {
       if (e) e.preventDefault();
       if (typeof google !== 'undefined' && google.script && google.script.run) {
@@ -606,10 +606,9 @@
       }
     }
 
-    // DUAL LANGUAGE DICTIONARY (Marathi <-> English)
+    // DUAL LANGUAGE DICTIONARY (Default: English)
     const translations = {
       en: {
-        navSubtitle: "RURAL EMPOWERMENT",
         portalBtn: "Login",
         heroBadge: "MAKE IN INDIA",
         heroTitle: "Every Village. Every Scheme. <span>Every Dream.</span>",
@@ -644,7 +643,6 @@
         fBtn: "Find Matching Schemes"
       },
       mr: {
-        navSubtitle: "ग्रामीण सक्षमीकरण",
         portalBtn: "लॉगिन",
         heroBadge: "मेक इन इंडिया • सोशल इनोव्हेशन २०२६",
         heroTitle: "गावातील प्रत्येक योजना. <span>प्रत्येक स्वप्न!</span>",
@@ -680,12 +678,15 @@
       }
     };
 
+    // Default Language: English
     let currentLang = 'en';
     const finderModal = new bootstrap.Modal(document.getElementById('finderModal'));
 
     function setLanguage(lang) {
       currentLang = lang;
       localStorage.setItem('gramoday_lang', lang);
+      
+      // When English is active, button offers Marathi switch, and vice versa
       document.getElementById('langLabel').innerText = (lang === 'en') ? 'मराठी' : 'English';
 
       document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -701,6 +702,7 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      // Default to English unless user explicitly chose otherwise
       const saved = localStorage.getItem('gramoday_lang') || 'en';
       setLanguage(saved);
     });
