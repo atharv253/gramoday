@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Gramoday | Portal Login</title>
+
+  <!-- Bootstrap 5 CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #0d5c3a;
+      --primary-dark: #073822;
+      --primary-hover: #0a462c;
+      --accent: #f59e0b;
+      --navy: #0f172a;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --text-muted: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 10% 20%, #ecfdf5 0%, #f8fafc 50%, #f1f5f9 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      margin: 0;
+      color: #1e293b;
+      overflow-x: hidden;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 390px;
+      margin: auto;
+    }
+
+    .login-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 2.25rem 1.75rem;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 15px 35px -10px rgba(13, 92, 58, 0.1), 0 5px 15px rgba(0, 0, 0, 0.04);
+      position: relative;
+    }
+
+    .brand-logo-wrap {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 0.75rem;
+      border-radius: 14px;
+      background: #ffffff;
+      padding: 3px;
+      border: 1.5px solid #d1fae5;
+      box-shadow: 0 6px 16px rgba(13, 92, 58, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-logo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
+    .brand-title {
+      font-size: 1.28rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: -0.3px;
+      margin-bottom: 0.15rem;
+    }
+
+    .brand-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    .badge-initiative {
+      display: inline-block;
+      background: #ecfdf5;
+      color: var(--primary);
+      border: 1px solid #a7f3d0;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.2rem 0.65rem;
+      border-radius: 30px;
+      letter-spacing: 0.4px;
+      margin-bottom: 0.65rem;
+    }
+
+    .form-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 0.35rem;
+    }
+
+    .input-box-wrap {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+
+    .input-icon-left {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 0.95rem;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .custom-input {
+      width: 100%;
+      height: 44px;
+      padding: 0.45rem 2.5rem 0.45rem 36px;
+      font-size: 0.86rem;
+      border-radius: 10px;
+      border: 1.5px solid var(--border-color);
+      background-color: #f8fafc;
+      color: #0f172a;
+      transition: all 0.2s ease;
+    }
+
+    .custom-input:focus {
+      outline: none;
+      background-color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(13, 92, 58, 0.12);
+    }
+
+    .toggle-pass-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      padding: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .toggle-pass-btn:hover {
+      color: #475569;
+    }
+
+    .btn-submit-login {
+      width: 100%;
+      height: 44px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(13, 92, 58, 0.25);
+      transition: all 0.2s ease;
+      margin-top: 0.6rem;
+    }
+
+    .btn-submit-login:hover:not(:disabled) {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-submit-login:disabled {
+      opacity: 0.75;
+      cursor: not-allowed;
+    }
+
+    .alert-custom {
+      font-size: 0.78rem;
+      border-radius: 8px;
+      padding: 0.6rem 0.85rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .footer-quote {
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 1.5rem;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 0.75rem; }
+      .login-card { padding: 1.85rem 1.35rem; border-radius: 16px; }
+      .brand-title { font-size: 1.18rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <div class="login-card">
+
+      <div class="text-center">
+        <div class="brand-logo-wrap">
+          <img 
+            src="Gramoday.jpg" 
+            alt="Gramoday Logo" 
+            class="brand-logo-img"
+            onerror="this.onerror=null; this.src='https://drive.google.com/thumbnail?id=1-_7ZvecrqoiGLQ_D-Af_uvZA5LkRFc0N&sz=w500';"
+          >
+        </div>
+
+        <span class="badge-initiative">MAKE IN INDIA</span>
+        <h1 class="brand-title">GRAMODAY</h1>
+        <p class="brand-subtitle">Portal Authentication<br><small class="text-secondary">(विद्यार्थी व व्यवस्थापन लॉगिन)</small></p>
+      </div>
+
+      <!-- Error Alert Box -->
+      <div id="alertBox" class="alert alert-danger alert-custom" role="alert">
+        <span id="alertMessage">Invalid email or password.</span>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" onsubmit="event.preventDefault(); submitLogin();">
+        <div class="mb-2">
+          <label for="emailInput" class="form-label">Email Address (ईमेल पत्ता)</label>
+          <div class="input-box-wrap">
+            <i class="bi bi-envelope input-icon-left"></i>
+            <input 
+              type="email" 
+              id="emailInput" 
+              class="custom-input" 
+              placeholder="name@domain.com" 
+              required 
+              autocomplete="email"
+              inputmode="email"
+            >
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label for="passwordInput" class="form-label">Password (पासवर्ड)</label>
+          <div class="input-box-wrap">
+            <i class="bi bi-lock input-icon-left"></i>
+            <input 
+              type="password" 
+              id="passwordInput" 
+              class="custom-input" 
+              placeholder="••••••••" 
+              required 
+              autocomplete="current-password"
+            >
+            <button type="button" class="toggle-pass-btn" onclick="togglePasswordVisibility()" aria-label="Toggle password view">
+              <i id="toggleEyeIcon" class="bi bi-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn-submit-login">
+          <span id="btnText">Sign In (लॉगिन करा)</span>
+          <div id="btnSpinner" class="spinner-border spinner-border-sm text-light d-none" role="status"></div>
+        </button>
+      </form>
+
+      <div class="footer-quote">
+        <strong>“Think Local • Innovate Indian • Impact Society”</strong>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function togglePasswordVisibility() {
+      const passField = document.getElementById('passwordInput');
+      const eyeIcon = document.getElementById('toggleEyeIcon');
+      if (passField.type === 'password') {
+        passField.type = 'text';
+        eyeIcon.classList.replace('bi-eye', 'bi-eye-slash');
+      } else {
+        passField.type = 'password';
+        eyeIcon.classList.replace('bi-eye-slash', 'bi-eye');
+      }
+    }
+
+    function showAlert(msg) {
+      const alertBox = document.getElementById('alertBox');
+      const alertMessage = document.getElementById('alertMessage');
+      alertMessage.innerText = msg;
+      alertBox.style.display = 'block';
+    }
+
+    function hideAlert() {
+      document.getElementById('alertBox').style.display = 'none';
+    }
+
+    function setFormLoading(isLoading) {
+      const btn = document.getElementById('submitBtn');
+      const text = document.getElementById('btnText');
+      const spinner = document.getElementById('btnSpinner');
+      const emailField = document.getElementById('emailInput');
+      const passField = document.getElementById('passwordInput');
+
+      if (isLoading) {
+        btn.disabled = true;
+        emailField.disabled = true;
+        passField.disabled = true;
+        text.innerText = "Verifying...";
+        spinner.classList.remove('d-none');
+      } else {
+        btn.disabled = false;
+        emailField.disabled = false;
+        passField.disabled = false;
+        text.innerText = "Sign In (लॉगिन करा)";
+        spinner.classList.add('d-none');
+      }
+    }
+
+    function redirectToDashboard() {
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run
+          .withSuccessHandler(function(url) {
+            window.top.location.href = url + '?page=dashboard';
+          })
+          .withFailureHandler(function() {
+            window.location.href = 'dashboard.html';
+          })
+          .getScriptUrl();
+      } else {
+        window.location.href = 'dashboard.html';
+      }
+    }
+
+    function submitLogin() {
+      hideAlert();
+      const email = document.getElementById('emailInput').value.trim();
+      const password = document.getElementById('passwordInput').value;
+
+      if (!email || !password) {
+        showAlert("Please enter both email and password.");
+        return;
+      }
+
+      setFormLoading(true);
+
+      // Automated direct check for student credentials
+      if (email.toLowerCase() === 'student@gmail.com' && password === 'Pass@123') {
+        const studentUser = {
+          id: "STU001",
+          name: "Student User",
+          email: "student@gmail.com",
+          role: "Student"
+        };
+        sessionStorage.setItem('gramoday_user', JSON.stringify(studentUser));
+        redirectToDashboard();
+        return;
+      }
+
+      // Backend Database Verification for Admin & Team Members
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run
+          .withSuccessHandler(function(response) {
+            if (response && response.success) {
+              sessionStorage.setItem('gramoday_user', JSON.stringify(response.user));
+              redirectToDashboard();
+            } else {
+              showAlert(response.message || "Invalid email or password.");
+              setFormLoading(false);
+            }
+          })
+          .withFailureHandler(function(error) {
+            showAlert("Server error: " + (error.message || "Connection failed. Please retry."));
+            setFormLoading(false);
+          })
+          .loginUser(email, password);
+      } else {
+        // Fallback for offline testing
+        sessionStorage.setItem('gramoday_user', JSON.stringify({ name: 'Admin', email: email, role: 'Admin' }));
+        window.location.href = 'dashboard.html';
+      }
+    }
+  </script>
+</body>
+</html>
